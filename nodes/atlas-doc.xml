@@ -1,0 +1,22 @@
+<?xml version="1.0" standalone="no"?>
+
+<kickstart>
+
+<description>
+Automatically Tuned Linear Algebra Package (ATLAS)
+http://math-atlas.sourceforge.net
+</description>
+
+<copyright>
+2011 R. Clint Whaley and the Atlas Developers
+</copyright>
+
+<changelog>
+</changelog>
+
+<package>roll-atlas-usersguide</package>
+
+<post>
+</post>
+
+</kickstart>
