@@ -84,7 +84,6 @@ build:
 	  $(COMPILERSETUP); \
           cpufreq-selector -g performance; \
           mv /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq.tmp; \
-          cp patch-files/*.c $(SOURCE)/bin; \
           cd $(SOURCE); \
           mkdir build; \
           cd build; \
