@@ -75,7 +75,7 @@ CONFIGURE_OPTIONS= --prefix=$(ROOT)/$(PKGROOT) --shared  --with-netlib-lapack-ta
 ifeq ("$(ROLLCOMPILER)", "intel")
   CONFIGURE_OPTIONS= --prefix=$(ROOT)/$(PKGROOT) --shared  --with-netlib-lapack-tarfile=/home/diag/jpg/lapack/lapack.tgz -C ic icc -F ic '-O2' -C if ifort -F if '-O2 -fltconsistency' -Fa alg -fPIC
 else ifeq ("$(ROLLCOMPILER)", "pgi")
-  CONFIGURE_OPTIONS= --prefix=$(ROOT)/$(PKGROOT) --shared  --with-netlib-lapack-tarfile=/home/diag/jpg/lapack/lapack.tgz -C ic pgcc -F ic '-fast' -C if pgf77 -F if '-fast' -Fa alg -fPIC
+  CONFIGURE_OPTIONS= --prefix=$(ROOT)/$(PKGROOT) --shared  --with-netlib-lapack-tarfile=/home/diag/jpg/lapack/lapack.tgz -C ic pgcc -F ic '-O2 -noswitcherror' -C if pgf77 -F if '-O2 -noswitcherror'
 endif
 
 build:
@@ -90,7 +90,7 @@ build:
           cd build; \
 	  ../configure  $(CONFIGURE_OPTIONS) ; \
           mv /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq.tmp /sys/devices/system/cpu/cpu0/cpufreq/cpuinfo_max_freq; \
-	  make \
+	  make build \
 	)
 
 install::
