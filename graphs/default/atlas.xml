@@ -35,11 +35,4 @@ http://math-atlas.sourceforge.net
   <tail>atlas-doc</tail>
 </order>
 
-<edge from="base">
-  <to>atlas-roll-test</to>
-</edge>
-<order from="base">
-  <tail>atlas-roll-test</tail>
-</order>
-
 </graph>
