@@ -1,4 +1,4 @@
-ROLLNAME = fftw$(ROLLSUFFIX)
+ROLLNAME = atlas$(ROLLSUFFIX)
 RELEASE  = 0
 COLOR    = orange
 
