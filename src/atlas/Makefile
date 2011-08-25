@@ -71,11 +71,11 @@ COMPILERSETUP = \
     module load $(ROLLCOMPILER); \
   fi
 
-CONFIGURE_OPTIONS= --prefix=$(ROOT)/$(PKGROOT) --shared  --with-netlib-lapack-tarfile=/home/diag/jpg/lapack/lapack.tgz -F ic '-O2' -F if '-O2' -Fa alg -fPIC
+CONFIGURE_OPTIONS= --prefix=$(ROOT)/$(PKGROOT) --shared  --with-netlib-lapack-tarfile=$(REDHAT.ROOT)/src/atlas/lapack-3.3.1/lapack.tgz -F ic '-O2' -F if '-O2' -Fa alg -fPIC
 ifeq ("$(ROLLCOMPILER)", "intel")
-  CONFIGURE_OPTIONS= --prefix=$(ROOT)/$(PKGROOT) --shared  --with-netlib-lapack-tarfile=/home/diag/jpg/lapack/lapack.tgz -C ic icc -F ic '-O2' -C if ifort -F if '-O2 -fltconsistency' -Fa alg -fPIC
+  CONFIGURE_OPTIONS= --prefix=$(ROOT)/$(PKGROOT) --shared  --with-netlib-lapack-tarfile=$(REDHAT.ROOT)/src/atlas/lapack-3.3.1.tgz -C ic icc -F ic '-O2' -C if ifort -F if '-O2 -fltconsistency' -Fa alg -fPIC
 else ifeq ("$(ROLLCOMPILER)", "pgi")
-  CONFIGURE_OPTIONS= --prefix=$(ROOT)/$(PKGROOT) --shared  --with-netlib-lapack-tarfile=/home/diag/jpg/lapack/lapack.tgz -C ic pgcc -F ic '-O2 -noswitcherror' -C if pgf77 -F if '-O2 -noswitcherror'
+  CONFIGURE_OPTIONS= --prefix=$(ROOT)/$(PKGROOT) --shared  --with-netlib-lapack-tarfile=$(REDHAT.ROOT)/src/atlas/lapack-3.3.1.tgz -C ic pgcc -F ic '-O2 -noswitcherror' -C if pgf77 -F if '-O2 -noswitcherror'
 endif
 
 build:

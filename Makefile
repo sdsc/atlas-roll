@@ -58,12 +58,6 @@
 ifndef ROLLCOMPILER
   ROLLCOMPILER = gnu
 endif
-ifndef ROLLMPI
-  ROLLMPI = mpich2 mvapich2 openmpi
-endif
-ifndef ROLLNETWORK
-  ROLLNETWORK = eth
-endif
 empty:=
 space:=$(empty) $(empty)
 ROLLSUFFIX = _$(subst $(space),+,$(ROLLCOMPILER))
