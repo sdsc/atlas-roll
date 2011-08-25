@@ -38,7 +38,7 @@ module-whatis "atlas"
 module-whatis "Version: 3.9.45"
 module-whatis "Description: atlas"
 module-whatis "Compiler: intel"
-set fftwHome /opt/atlas/3.9.45/intel
+set atlasHome /opt/atlas/3.9.45/intel
 setenv ATLASHOME $atlasHome
 prepend-path PATH $atlasHome/bin
 prepend-path LD_LIBRARY_PATH $atlasHome/lib
