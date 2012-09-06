@@ -1,0 +1,6 @@
+#%Module1.0
+module-whatis "atlas_ROLLCOMPILER"
+module-whatis "Version: VERSION"
+prepend-path LD_LIBRARY_PATH /opt/atlas/ROLLCOMPILER/lib
+prepend-path LIBPATH /opt/atlas/ROLLCOMPILER/lib
+setenv ATLASHOME /opt/atlas/ROLLCOMPILER

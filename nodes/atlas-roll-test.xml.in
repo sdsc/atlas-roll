@@ -1,0 +1,66 @@
+<?xml version="1.0" standalone="no"?>
+
+<kickstart>
+
+<description>
+The ATLAS roll installation test.
+</description>
+
+<copyright>
+Copyright (c) 2000 - 2011 The Regents of the University of California.
+All rights reserved. Rocks(r) v5.1 www.rocksclusters.org
+</copyright>
+
+<changelog>
+</changelog>
+
+<post>
+
+/bin/mkdir -m 0755 /root/rolltests
+
+<file name="/root/rolltests/atlas.t" perms="0755">
+<![CDATA[#!/usr/bin/perl -w
+# atlas roll installation test.  Usage:
+# atlas.t [nodetype]
+#   where nodetype is one of "Compute", "Dbnode", "Frontend" or "Login"
+#   if not specified, the test assumes either Compute or Frontend
+
+use Test::More qw(no_plan);
+
+my $appliance = $#ARGV >= 0 ? $ARGV[0] :
+                -d '/export/rocks/install' ? 'Frontend' : 'Compute';
+my $installedOnAppliancesPattern = 'Compute';
+my $output;
+my @COMPILERS = (
+  'ROLLCOMPILER',
+)
+my $TESTFILE = 'tmpatlas';
+
+# atlas-install.xml
+if($appliance =~ /$installedOnAppliancesPattern/) {
+  ok(-d "/opt/atlas", "atlas installed");
+} else {
+  ok(! -d "/opt/atlas", "atlas not installed");
+}
+
+SKIP: {
+
+  skip 'atlas not installed', 3
+    if $appliance !~ /$installedOnAppliancesPattern/;
+  skip 'modules not installed', 3 if ! -f '/etc/profile.d/modules.sh';
+  `/bin/ls /opt/modulefiles/applications/atlas/[0-9]* 2>&1`;
+  ok($? == 0, "atlas module installed");
+  `/bin/ls /opt/modulefiles/applications/atlas/.version.[0-9]* 2>&1`;
+  ok($? == 0, "atlas version module installed");
+  ok(-l "/opt/modulefiles/applications/atlas/.version",
+     "atlas version module link created");
+
+}
+
+`rm -f $TESTFILE*`;
+]]>
+</file>
+
+</post>
+
+</kickstart> 

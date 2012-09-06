@@ -1,0 +1,3 @@
+NAME    = atlas-modules_$(ROLLCOMPILER)
+VERSION = 3.9.32
+RELEASE = 1

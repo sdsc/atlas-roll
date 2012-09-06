@@ -1,0 +1,28 @@
+<?xml version="1.0" standalone="no"?>
+
+<graph>
+
+<description>
+Auto Tuned Linear Algebra Package (ATLAS) - http://math-atlas.sourceforge.net
+</description>
+
+<copyright>
+Copyright (c) 2000 - 2011 The Regents of the University of California.
+All rights reserved. Rocks(r) v5.1 www.rocksclusters.org
+</copyright>
+
+<changelog>
+</changelog>
+
+<edge from="base">
+  <to>atlas-install</to>
+  <to>atlas-roll-test</to>
+</edge>
+<order head="common">
+  <tail>atlas-install</tail>
+</order>
+<order head="base">
+  <tail>atlas-roll-test</tail>
+</order>
+
+</graph>
