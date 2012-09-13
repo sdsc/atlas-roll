@@ -75,7 +75,7 @@ COMPILERSETUP = \
 
 CONFIGURE_OPTIONS = \
   --prefix=$(ROOT)/$(PKGROOT) \
-  --with-netlib-lapack-tarfile=`ls $(REDHAT.ROOT)/src/lapack/lapack*z`
+  --with-netlib-lapack-tarfile=`ls $(REDHAT.ROOT)/../math/src/lapack/lapack*z`
 ifeq ("$(ROLLCOMPILER)", "intel")
   CONFIGURE_OPTIONS += -C ic icc -F ic '-O2 -xHOST' -C if ifort \
                        -F if '-O2 -fltconsistency -xHOST' -Fa alg -fPIC
