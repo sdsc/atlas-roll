@@ -92,7 +92,7 @@ build:
 	( \
 	  gov=`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor`; \
 	  for cpu in `grep '^ *processor' /proc/cpuinfo | sed 's/[^0-9]*//'`; do \
-	    cpufreq-selector -c $$cpu -g performance; \
+	    cpufreq-selector -c $${cpu} -g performance; \
 	  done; \
 	  $(COMPILERSETUP); \
 	  cd $(SOURCE); \
