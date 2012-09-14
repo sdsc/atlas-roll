@@ -67,12 +67,8 @@ copyright rpm pkg clean::
 	  grep -q ROLLCOMPILER $$i/version.mk; \
 	  if test $$? -eq 0; then \
 	    for c in $(ROLLCOMPILER); do \
-	      for m in $(ROLLMPI); do \
-	         for n in $(ROLLNETWORK); do \
-	           echo make $@ in $$i with ROLLCOMPILER=$$c ROLLMPI=$$m ROLLNETWORK=$$n; \
-	           (cd $$i; $(MAKE) ROLLCOMPILER=$$c ROLLMPI=$$m ROLLNETWORK=$$n $@); \
-	         done; \
-              done; \
+	           echo make $@ in $$i with ROLLCOMPILER=$$c; \
+	           (cd $$i; $(MAKE) ROLLCOMPILER=$$c $@); \
 	    done; \
 	  else \
 	    (cd $$i; $(MAKE) $@) ; \

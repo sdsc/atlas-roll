@@ -54,7 +54,7 @@
 # 
 # @Copyright@
 
-PKGROOT = /opt/modulefiles/applications/.(ROLLCOMPILER)/atlas
+PKGROOT = /opt/modulefiles/applications/.$(ROLLCOMPILER)/atlas
 REDHAT.ROOT = $(CURDIR)/../../
 
 -include $(ROCKSROOT)/etc/Rules.mk
