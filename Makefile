@@ -58,13 +58,6 @@
 ifndef ROLLCOMPILER
   ROLLCOMPILER = gnu
 endif
-empty:=
-space:=$(empty) $(empty)
-ifeq ("$(ROLLOPTS)", "")
-  ROLLSUFFIX = _$(subst $(space),+,$(ROLLCOMPILER))
-else
-  ROLLSUFFIX = _$(subst $(space),+,$(ROLLCOMPILER))_$(subst $(space),+,$(ROLLOPTS))
-endif
 
 -include $(ROLLSROOT)/etc/Rolls.mk
 
