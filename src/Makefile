@@ -71,6 +71,6 @@ copyright rpm pkg clean::
 	           (cd $$i; $(MAKE) ROLLCOMPILER=$$c $@); \
 	    done; \
 	  else \
-	    (cd $$i; $(MAKE) $@) ; \
+	    (cd $$i; $(MAKE) ROLLCOMPILER="$(ROLLCOMPILER)" $@) ; \
 	  fi; \
 	done
