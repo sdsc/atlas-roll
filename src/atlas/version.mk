@@ -1,3 +1,0 @@
-NAME    = atlas_$(ROLLCOMPILER)
-VERSION = 3.10.0
-RELEASE = 0
