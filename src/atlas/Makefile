@@ -75,11 +75,7 @@ COMPILERSETUP = \
 
 CONFIGURE_OPTIONS = \
   --prefix=$(ROOT)/$(PKGROOT) \
-<<<<<<< Makefile
-  --with-netlib-lapack-tarfile=lapack-3.4.2.tgz
-=======
-  --with-netlib-lapack-tarfile=
->>>>>>> 1.15
+  --with-netlib-lapack=$${LAPACKHOME}/lib/liblapack.a
 ifeq ("$(ROLLCOMPILER)", "intel")
   CONFIGURE_OPTIONS += -C ic icc -F ic '-O2 -xHOST' -C if ifort \
                        -F if '-O2 -fltconsistency -xHOST' -Fa alg -fPIC
@@ -115,10 +111,13 @@ build:
 
 install::
 	mkdir -p -m 755 $(ROOT)/$(PKGROOT)
+	mkdir -p -m 755 $(PKGROOT)
+	mount --bind $(ROOT)/$(PKGROOT) $(PKGROOT)
 	( \
 	  cd $(SOURCE)/build; \
-	  make prefix=$(ROOT)/$(PKGROOT) install \
+	  make prefix=$(PKGROOT) install \
 	)
+	umount $(PKGROOT)
 
 clean::
 	rm -rf $(SOURCE)
