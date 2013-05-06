@@ -15,5 +15,6 @@ All rights reserved. Rocks(r) v5.1 www.rocksclusters.org
 
 <package>atlas_ROLLCOMPILER</package>
 <package>atlas-modules</package>
+<package>atlas-roll-test</package>
 
 </kickstart>

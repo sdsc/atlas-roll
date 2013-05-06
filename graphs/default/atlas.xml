@@ -16,13 +16,9 @@ All rights reserved. Rocks(r) v5.1 www.rocksclusters.org
 
 <edge from="base">
   <to>atlas-install</to>
-  <to>atlas-roll-test</to>
 </edge>
 <order head="common">
   <tail>atlas-install</tail>
-</order>
-<order head="base">
-  <tail>atlas-roll-test</tail>
 </order>
 
 </graph>
