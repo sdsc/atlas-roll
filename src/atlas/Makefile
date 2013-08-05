@@ -90,9 +90,8 @@ endif
 build:
 	tar zxvf $(SOURCE).tar.gz
 	( \
-	  gov=`cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor`; \
 	  for cpu in `grep '^ *processor' /proc/cpuinfo | sed 's/[^0-9]*//'`; do \
-	    cpufreq-selector -c $${cpu} -g performance; \
+	    cpufreq-set -c $${cpu} -g performance; \
 	  done; \
 	  $(COMPILERSETUP); \
 	  cd $(SOURCE); \
@@ -103,9 +102,9 @@ build:
  	    cat bin/Makefile | sed 's/(FLINKER)/(FLINKER) -Mnomain/' >tmp; \
  	    mv -f tmp bin/Makefile; \
  	  fi; \
-	  make build; \
+	  make -j 16 build; \
 	  for cpu in `grep '^ *processor' /proc/cpuinfo | sed 's/[^0-9]*//'`; do \
-	    cpufreq-selector -c $$cpu -g $$gov; \
+	    cpufreq-set -c $$cpu -g userspace; \
 	  done \
 	)
 
@@ -115,7 +114,7 @@ install::
 	mount --bind $(ROOT)/$(PKGROOT) $(PKGROOT)
 	( \
 	  cd $(SOURCE)/build; \
-	  make prefix=$(PKGROOT) install \
+	  make -j 16 prefix=$(PKGROOT) install \
 	)
 	umount $(PKGROOT)
 
