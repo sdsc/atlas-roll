@@ -101,7 +101,7 @@ build:
  	    cat bin/Makefile | sed 's/(FLINKER)/(FLINKER) -Mnomain/' >tmp; \
  	    mv -f tmp bin/Makefile; \
  	  fi; \
-	  make -j 16 build; \
+	  make  build; \
 	  for cpu in `grep '^ *processor' /proc/cpuinfo | sed 's/[^0-9]*//'`; do \
 	    cpufreq-set -c $$cpu -g userspace; \
 	  done \
@@ -113,7 +113,7 @@ install::
 	mount --bind $(ROOT)/$(PKGROOT) $(PKGROOT)
 	( \
 	  cd $(SOURCE)/build; \
-	  make -j 16 prefix=$(PKGROOT) install \
+	  make  prefix=$(PKGROOT) install \
 	)
 	umount $(PKGROOT)
 
