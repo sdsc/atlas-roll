@@ -59,11 +59,12 @@ ifndef ROLLCOMPILER
 endif
 
 PKGROOT = /opt/atlas/$(ROLLCOMPILER)
-SOURCE = atlas-$(VERSION)
+SOURCE = $(ATLAS_NAME)-$(ATLAS_VERSION)
 REDHAT.ROOT = $(PWD)/../../
 RPM.EXTRAS=%define __os_install_post /usr/lib/rpm/brp-compress
 
 -include $(ROCKSROOT)/etc/Rules.mk
+include pull.mk
 
 COMPILERSETUP = \
   if test -e /etc/profile.d/modules.sh; then \
@@ -74,7 +75,7 @@ COMPILERSETUP = \
 
 CONFIGURE_OPTIONS = \
   --prefix=$(ROOT)/$(PKGROOT) \
-  --with-netlib-lapack-tarfile=$(REDHAT.ROOT)/src/atlas/lapack-3.4.2.tgz
+  --with-netlib-lapack-tarfile=$(REDHAT.ROOT)/src/atlas/$(LAPACK_SOURCE)
 ifeq ("$(ROLLCOMPILER)", "intel")
   CONFIGURE_OPTIONS += -C ic icc -F ic '-O2 -xHOST' -C if ifort \
                        -F if '-O2 -fltconsistency -xHOST' -Fa alg -fPIC
@@ -86,7 +87,7 @@ else
   CONFIGURE_OPTIONS += -C ic gcc -F ic "-O2" -C if gfortran -F if "-O2"
 endif
 
-build:
+build: $(SRC_DIRS)
 	tar zxvf $(SOURCE).tar.gz
 	( \
 	  for cpu in `grep '^ *processor' /proc/cpuinfo | sed 's/[^0-9]*//'`; do \
