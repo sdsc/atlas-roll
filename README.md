@@ -4,9 +4,9 @@
 
 This Rocks roll bundles the ATLAS math package.
 
-ATLAB is...
+The Automatically Tuned Linear Algebra Software (ATLAS) focuses on applying empirical techniques in order to provide portable performance. At present, it provides C and Fortran77 interfaces to a portably efficient <a href="http://www.netlib.org/blas/" target="_blank">BLAS</a> implementation, as well as a few routines from <a href="http://www.netlib.org/lapack/" target="_blank">LAPACK</a>.
 
-For more information about ATLAB please visit the <a href="" target="_blank">official web page</a>.
+For more information about ATLAS please visit the <a href="http://math-atlas.sourceforge.net" target="_blank">official web page</a>.
 
 
 ## Requirements
