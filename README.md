@@ -29,7 +29,7 @@ development machine.
 
 ## Dependencies
 
-Unknown at this time.
+cpufreq-set
 
 
 ## Building

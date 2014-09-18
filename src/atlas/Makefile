@@ -54,69 +54,66 @@
 #
 # @Copyright@
 
-ifndef ROLLCOMPILER
-  ROLLCOMPILER = gnu
-endif
-
-PKGROOT = /opt/atlas/$(ROLLCOMPILER)
-SOURCE = $(ATLAS_NAME)-$(ATLAS_VERSION)
 REDHAT.ROOT = $(PWD)/../../
 RPM.EXTRAS=%define __os_install_post /usr/lib/rpm/brp-compress
 
 -include $(ROCKSROOT)/etc/Rules.mk
 include pull.mk
 
+CC = gcc
+F77 = gfortran
+ifeq ("$(COMPILERNAME)", "intel")
+  CC = icc
+  F77 = ifort
+else ifeq ("$(COMPILERNAME)", "pgi")
+  CC = pgcc
+  F77 = pgf77
+endif
+
 COMPILERSETUP = \
-  if test -e /etc/profile.d/modules.sh; then \
-    . /etc/profile.d/modules.sh; \
-    module load $(ROLLCOMPILER); \
-  fi
+  module load $(ROLLCOMPILER) || true; \
+  echo === Compiler and version ===; \
+  $(CC) --version
 
-
-CONFIGURE_OPTIONS = \
-  --prefix=$(ROOT)/$(PKGROOT) \
-  --with-netlib-lapack-tarfile=$(REDHAT.ROOT)/src/atlas/$(LAPACK_SOURCE)
-ifeq ("$(ROLLCOMPILER)", "intel")
-  CONFIGURE_OPTIONS += -C ic icc -F ic '-O2 -xHOST' -C if ifort \
-                       -F if '-O2 -fltconsistency -xHOST' -Fa alg -fPIC
-else ifeq ("$(ROLLCOMPILER)", "pgi")
-  CONFIGURE_OPTIONS += -C ic pgcc -F ic "-O2 -noswitcherror" -C if pgf77 -F if "-O2 -noswitcherror"
+CONFIGURE_OPTIONS = --prefix=$(ROOT)/$(PKGROOT) \
+                    --with-netlib-lapack-tarfile=$(PWD)/$(LAPACK_PKG) \
+                    -C ic $(CC) -F ic
+ifeq ("$(COMPILERNAME)", "intel")
+  CONFIGURE_OPTIONS += "-O2 -xHOST" -C if $(F77) \
+                       -F if "-O2 -fltconsistency -xHOST" -Fa alg -fPIC
+else ifeq ("$(COMPILERNAME)", "pgi")
+  CONFIGURE_OPTIONS += "-O2 -noswitcherror" -C if $(F77) \
+                       -F if "-O2 -noswitcherror"
 else ifneq ("$(ROLLOPTS)", "$(subst avx,,$(ROLLOPTS))")
-  CONFIGURE_OPTIONS += -C ic gcc -F ic "-O2 -mavx" -C if gfortran -F if "-O2 -mavx"
+  CONFIGURE_OPTIONS += "-O2 -mavx" -C if $(F77) -F if "-O2 -mavx"
 else
-  CONFIGURE_OPTIONS += -C ic gcc -F ic "-O2" -C if gfortran -F if "-O2"
+  CONFIGURE_OPTIONS += "-O2" -C if $(F77) -F if "-O2"
 endif
 
 build: $(SRC_DIRS)
-	tar zxvf $(SOURCE).tar.gz
+	mkdir $(SOURCE_DIR)/build
+	-for cpu in `grep '^ *processor' /proc/cpuinfo | sed 's/[^0-9]*//'`; do \
+	  cpufreq-set -c $${cpu} -g performance; \
+	done
 	( \
-	  for cpu in `grep '^ *processor' /proc/cpuinfo | sed 's/[^0-9]*//'`; do \
-	    cpufreq-set -c $${cpu} -g performance; \
-	  done; \
 	  $(COMPILERSETUP); \
-	  cd $(SOURCE); \
-	  mkdir build; \
-	  cd build; \
+	  cd $(SOURCE_DIR)/build; \
 	  ../configure $(CONFIGURE_OPTIONS); \
- 	  if test "$(ROLLCOMPILER)" = "pgi"; then \
- 	    cat bin/Makefile | sed 's/(FLINKER)/(FLINKER) -Mnomain/' >tmp; \
- 	    mv -f tmp bin/Makefile; \
- 	  fi; \
-	  make  build; \
-	  for cpu in `grep '^ *processor' /proc/cpuinfo | sed 's/[^0-9]*//'`; do \
-	    cpufreq-set -c $$cpu -g userspace; \
-	  done \
+	  if test "$(COMPILERNAME)" = "pgi"; then \
+	    perl -pi -e 's/(FLINKER)/(FLINKER) -Mnomain/' bin/Makefile; \
+	  fi; \
+	  make build \
 	)
+	-for cpu in `grep '^ *processor' /proc/cpuinfo | sed 's/[^0-9]*//'`; do \
+	  cpufreq-set -c $$cpu -g userspace; \
+	done
 
 install::
 	mkdir -p -m 755 $(ROOT)/$(PKGROOT)
-	mkdir -p -m 755 $(PKGROOT)
-	mount --bind $(ROOT)/$(PKGROOT) $(PKGROOT)
 	( \
-	  cd $(SOURCE)/build; \
-	  make  prefix=$(PKGROOT) install \
+	  cd $(SOURCE_DIR)/build; \
+	  make install \
 	)
-	umount $(PKGROOT)
 
 clean::
-	rm -rf $(SOURCE)
+	rm -rf $(SOURCE_DIR)

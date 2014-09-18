@@ -8,7 +8,7 @@ use Test::More qw(no_plan);
 
 my $appliance = $#ARGV >= 0 ? $ARGV[0] :
                 -d '/export/rocks/install' ? 'Frontend' : 'Compute';
-my $installedOnAppliancesPattern = 'Compute';
+my $installedOnAppliancesPattern = '.';
 my $output;
 my @COMPILERS = split(/\s+/, 'ROLLCOMPILER');
 my $TESTFILE = 'tmpatlas';
@@ -36,10 +36,7 @@ END
 open(OUT, ">$TESTFILE.sh");
 print OUT <<END;
 #!/bin/bash
-if test -f /etc/profile.d/modules.sh; then
-  . /etc/profile.d/modules.sh
-  module load \$1 atlas
-fi
+module load \$1 atlas
 export LD_LIBRARY_PATH=\$ATLASHOME/lib:\$LD_LIBRARY_PATH
 \$2 -I \$ATLASHOME/include -o $TESTFILE.exe $TESTFILE.c -L \$ATLASHOME/lib -lcblas -latlas
 ./$TESTFILE.exe
@@ -57,15 +54,13 @@ foreach my $compiler(@COMPILERS) {
 
   SKIP: {
 
-    skip "atlas/$compiler not installed", 5
-      if ! -d "$packageHome/$compiler";
+    skip "atlas/$compiler not installed", 5 if ! -d "$packageHome/$compiler";
 
     $output = `bash $TESTFILE.sh $compiler $CC{$compiler} 2>&1`;
     ok(-f "$TESTFILE.exe", "compile/link with atlas/$compiler");
     like($output, qr/110/, "run with atlas/$compiler");
     `/bin/rm $TESTFILE.exe`;
   
-    skip 'modules not installed', 3 if ! -f '/etc/profile.d/modules.sh';
     `/bin/ls /opt/modulefiles/applications/.$compiler/atlas/[0-9]* 2>&1`;
     ok($? == 0, "atlas module installed");
     `/bin/ls /opt/modulefiles/applications/.$compiler/atlas/.version.[0-9]* 2>&1`;

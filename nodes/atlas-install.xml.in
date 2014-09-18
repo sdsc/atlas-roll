@@ -6,14 +6,11 @@ Auto Tuned Linear Algebra Package (ATLAS) - http://math-atlas.sourceforge.net
 </description>
 
 <copyright>
-Copyright (c) 2000 - 2011 The Regents of the University of California.
+Copyright (c) 2000 - 2014 The Regents of the University of California.
 All rights reserved. Rocks(r) v5.1 www.rocksclusters.org
 </copyright>
 
-<changelog>
-</changelog>
-
-<package>atlas_ROLLCOMPILER</package>
+<package>atlas_COMPILERNAME</package>
 <package>atlas-modules</package>
 <package>atlas-roll-test</package>
 

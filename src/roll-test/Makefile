@@ -54,7 +54,6 @@
 # 
 # @Copyright@
 
-PKGROOT = /root/rolltests
 REDHAT.ROOT = $(CURDIR)/../../
 
 -include $(ROCKSROOT)/etc/Rules.mk
@@ -63,10 +62,10 @@ include Rules.mk
 build:
 
 install::
-	  mkdir -p $(ROOT)/$(PKGROOT)
-	  cp *.t $(ROOT)/$(PKGROOT)/
-	  perl -pi -e 's/ROLLCOMPILER/$(ROLLCOMPILER)/g' $(ROOT)/$(PKGROOT)/*.t
-	  perl -pi -e 's/ROLLMPI/$(ROLLMPI)/g' $(ROOT)/$(PKGROOT)/*.t
-	  perl -pi -e 's/ROLLNETWORK/$(ROLLNETWORK)/g' $(ROOT)/$(PKGROOT)/*.t
+	mkdir -p $(ROOT)/$(PKGROOT)
+	cp *.t $(ROOT)/$(PKGROOT)/
+	perl -pi -e 's#ROLLCOMPILER#$(ROLLCOMPILER)#g' $(ROOT)/$(PKGROOT)/*.t
+	perl -pi -e 's#ROLLMPI#$(ROLLMPI)#g' $(ROOT)/$(PKGROOT)/*.t
+	perl -pi -e 's#ROLLNETWORK#$(ROLLNETWORK)#g' $(ROOT)/$(PKGROOT)/*.t
 
 clean::
