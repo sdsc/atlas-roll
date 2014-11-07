@@ -58,16 +58,6 @@ software, e.g.,
 The build process recognizes "gnu", "intel" or "pgi" as the value for the
 `ROLLCOMPILER` variable.  The default value is "gnu".
 
-The value of the `ROLLCOMPILER` variable is incorporated into
-the names of the produced rpms.  For example,
-
-```shell
-make ROLLCOMPILER=intel 2>&1 | tee build.log
-```
-
-produces a roll containing an rpm with a name that begins
-`atlas_intel`.
-
 This roll also supports the `ROLLOPTS` make variable.  If it contains 'avx',
 options are passed to the compiler to produce AVX instructions.
 
