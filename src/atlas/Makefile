@@ -58,22 +58,15 @@ REDHAT.ROOT = $(PWD)/../../
 RPM.EXTRAS=%define __os_install_post /usr/lib/rpm/brp-compress
 
 -include $(ROCKSROOT)/etc/Rules.mk
-include pull.mk
+include $(SDSCDEVEL)/Pull.mk
+include $(SDSCDEVEL)/Rules.mk
 
-CC = gcc
-F77 = gfortran
-ifeq ("$(COMPILERNAME)", "intel")
-  CC = icc
-  F77 = ifort
-else ifeq ("$(COMPILERNAME)", "pgi")
-  CC = pgcc
-  F77 = pgf77
+AVXOPT =
+ifneq ("$(ROLLOPTS)", "$(subst avx,,$(ROLLOPTS))")
+  ifeq ("$(COMPILERNAME)", "gnu")
+    AVXOPT = -maxv
+  endif
 endif
-
-COMPILERSETUP = \
-  module load $(ROLLCOMPILER) || true; \
-  echo === Compiler and version ===; \
-  $(CC) --version
 
 CONFIGURE_OPTIONS = --prefix=$(ROOT)/$(PKGROOT) \
                     --with-netlib-lapack-tarfile=$(PWD)/$(LAPACK_PKG) \
@@ -84,11 +77,22 @@ ifeq ("$(COMPILERNAME)", "intel")
 else ifeq ("$(COMPILERNAME)", "pgi")
   CONFIGURE_OPTIONS += "-O2 -noswitcherror" -C if $(F77) \
                        -F if "-O2 -noswitcherror"
-else ifneq ("$(ROLLOPTS)", "$(subst avx,,$(ROLLOPTS))")
-  CONFIGURE_OPTIONS += "-O2 -mavx" -C if $(F77) -F if "-O2 -mavx"
 else
-  CONFIGURE_OPTIONS += "-O2" -C if $(F77) -F if "-O2"
+  CONFIGURE_OPTIONS += "-O2 $(AVXOPT)" -C if $(F77) -F if "-O2 $(AVXOPT)"
 endif
+
+$(NAME).spec: DESCRIPTION LICENSE
+
+DESCRIPTION:
+	$(MODULE_LOAD_CC); \
+	( \
+	  $(DESCRIBE_PKG); \
+	  $(DESCRIBE_CC) \
+	) > $@
+
+LICENSE: $(SRC_DIRS)
+	$(CHECK_LICENSE_FILES)
+	echo BSD > $@
 
 build: $(SRC_DIRS)
 	mkdir $(SOURCE_DIR)/build
@@ -96,7 +100,7 @@ build: $(SRC_DIRS)
 	  cpufreq-set -c $${cpu} -g performance; \
 	done
 	( \
-	  $(COMPILERSETUP); \
+	  $(MODULE_LOAD_CC); \
 	  cd $(SOURCE_DIR)/build; \
 	  ../configure $(CONFIGURE_OPTIONS); \
 	  if test "$(COMPILERNAME)" = "pgi"; then \
@@ -114,6 +118,7 @@ install::
 	  cd $(SOURCE_DIR)/build; \
 	  make install \
 	)
+	$(INSTALL_LICENSE_FILES)
 
 clean::
-	rm -rf $(SOURCE_DIR)
+	rm -rf $(SOURCE_DIR) DESCRIPTION LICENSE
