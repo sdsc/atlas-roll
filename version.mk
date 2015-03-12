@@ -1,6 +1,6 @@
-ROLLNAME = atlas
-RELEASE  = 0
-COLOR    = orange
+ROLLNAME        = atlas
+VERSION        :=$(shell bash version.sh -v)
+RELEASE        :=$(shell bash version.sh -h)
+COLOR           = orange
 
-REDHAT.ROOT = $(PWD)
-RPM.EXTRAS         = AutoReq:No
+REDHAT.ROOT     = $(PWD)
