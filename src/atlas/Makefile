@@ -61,6 +61,10 @@ RPM.EXTRAS=%define __os_install_post /usr/lib/rpm/brp-compress
 include $(SDSCDEVEL)/Pull.mk
 include $(SDSCDEVEL)/Rules.mk
 
+ifndef ROLLOPTS
+   ROLLOPTS=noarg
+endif
+
 AVXOPT =
 ifneq ("$(ROLLOPTS)", "$(subst avx2,,$(ROLLOPTS))")
   ifeq ("$(COMPILERNAME)", "gnu")
@@ -101,10 +105,13 @@ LICENSE: $(SRC_DIRS)
 build: $(SRC_DIRS)
 	mkdir $(SOURCE_DIR)/build
 	-for cpu in `grep '^ *processor' /proc/cpuinfo | sed 's/[^0-9]*//'`; do \
-	  cpufreq-set -c $${cpu} -g performance; \
+          cpupower  frequency-set -g performance; \
 	done
 	( \
 	  $(MODULE_LOAD_CC); \
+          if [[ $(ROLLOPTS) ==  *"nothrottletest"* ]]; then \
+	       patch ATLAS/CONFIG/src/config.c patch-files/config.c.patch; \
+          fi; \
 	  cd $(SOURCE_DIR)/build; \
 	  ../configure $(CONFIGURE_OPTIONS); \
 	  if test "$(COMPILERNAME)" = "pgi"; then \
@@ -113,7 +120,6 @@ build: $(SRC_DIRS)
 	  make build \
 	)
 	-for cpu in `grep '^ *processor' /proc/cpuinfo | sed 's/[^0-9]*//'`; do \
-	  cpufreq-set -c $$cpu -g userspace; \
 	done
 
 install::
