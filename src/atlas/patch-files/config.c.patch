@@ -1,0 +1,10 @@
+--- ATLAS/CONFIG/src/config.c	2014-07-10 09:22:02.000000000 -0700
++++ patch-files/config.c	2015-03-13 12:20:28.641125709 -0700
+@@ -713,6 +713,7 @@
+ {
+    int i, iret;
+    char *ln;
++   return(0);
+    i = strlen(targarg) + 22 + 12;
+    ln = malloc(i*sizeof(char));
+    assert(ln);
