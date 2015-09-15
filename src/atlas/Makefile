@@ -72,7 +72,7 @@ ifneq ("$(ROLLOPTS)", "$(subst avx2,,$(ROLLOPTS))")
   endif
 else ifneq ("$(ROLLOPTS)", "$(subst avx,,$(ROLLOPTS))")
   ifeq ("$(COMPILERNAME)", "gnu")
-    AVXOPT = -maxv
+    AVXOPT = -mavx
   endif
 endif
 
