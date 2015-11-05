@@ -76,7 +76,7 @@ else ifneq ("$(ROLLOPTS)", "$(subst avx,,$(ROLLOPTS))")
   endif
 endif
 
-CONFIGURE_OPTIONS = --prefix=$(ROOT)/$(PKGROOT) \
+CONFIGURE_OPTIONS = --prefix=$(ROOT)/$(PKGROOT) --shared \
                     --with-netlib-lapack-tarfile=$(PWD)/$(LAPACK_PKG) \
                     -C ic $(CC) -F ic
 ifeq ("$(COMPILERNAME)", "intel")
