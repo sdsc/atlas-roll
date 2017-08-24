@@ -61,15 +61,15 @@ foreach my $compiler(@COMPILERS) {
     like($output, qr/110/, "run with atlas/$compiler");
     `/bin/rm $TESTFILE.exe`;
   
-    `/bin/ls /opt/modulefiles/applications/.$compiler/atlas/[0-9]* 2>&1`;
-    ok($? == 0, "atlas module installed");
-    `/bin/ls /opt/modulefiles/applications/.$compiler/atlas/.version.[0-9]* 2>&1`;
-    ok($? == 0, "atlas version module installed");
-    ok(-l "/opt/modulefiles/applications/.$compiler/atlas/.version",
-       "atlas version module link created");
-
   }
 
 }
+
+`/bin/ls /opt/modulefiles/applications/atlas/[0-9]* 2>&1`;
+ok($? == 0, "atlas module installed");
+`/bin/ls /opt/modulefiles/applications/atlas/.version.[0-9]* 2>&1`;
+ok($? == 0, "atlas version module installed");
+ok(-l "/opt/modulefiles/applications/atlas/.version",
+  "atlas version module link created");
 
 `rm -fr $TESTFILE*`;

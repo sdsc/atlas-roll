@@ -1,9 +1,9 @@
 PACKAGE     = atlas
 CATEGORY    = applications
 
-NAME        = sdsc-$(PACKAGE)-modules_$(ROLLCOMPILER)
-RELEASE     = 4
-PKGROOT     = /opt/modulefiles/$(CATEGORY)/.$(ROLLCOMPILER)/$(PACKAGE)
+NAME        = sdsc-$(PACKAGE)-modules
+RELEASE     = 5
+PKGROOT     = /opt/modulefiles/$(CATEGORY)/$(PACKAGE)
 
 VERSION_SRC = $(REDHAT.ROOT)/src/$(PACKAGE)/version.mk
 VERSION_INC = version.inc
