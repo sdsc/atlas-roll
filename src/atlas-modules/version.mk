@@ -1,7 +1,3 @@
-ifndef ROLLCOMPILER
-  ROLLCOMPILER = gnu
-endif
-
 PACKAGE     = atlas
 CATEGORY    = applications
 
