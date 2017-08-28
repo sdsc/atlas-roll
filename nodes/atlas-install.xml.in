@@ -11,7 +11,7 @@ All rights reserved. Rocks(r) v5.1 www.rocksclusters.org
 </copyright>
 
 <package>sdsc-atlas_COMPILERNAME</package>
-<package>sdsc-atlas-modules_COMPILERNAME</package>
+<package>sdsc-atlas-modules</package>
 <package>sdsc-atlas-roll-test</package>
 
 </kickstart>
