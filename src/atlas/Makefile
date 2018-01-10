@@ -3,11 +3,11 @@
 #
 # @Copyright@
 #
-# 				Rocks(tm)
-# 		         www.rocksclusters.org
-# 		        version 4.3 (Mars Hill)
+#                               Rocks(r)
+#                        www.rocksclusters.org
+#                        version 7.0 (Manzanita)
 #
-# Copyright (c) 2000 - 2011 The Regents of the University of California.
+# Copyright (c) 2000 - 2017 The Regents of the University of California.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -25,9 +25,9 @@
 # 3. All advertising and press materials, printed or electronic, mentioning
 # features or use of this software must display the following acknowledgement:
 #
-# 	"This product includes software developed by the Rocks(tm)
-# 	Cluster Group at the San Diego Supercomputer Center at the
-# 	University of California, San Diego and its contributors."
+#       "This product includes software developed by the Rocks(r)
+#       Cluster Group at the San Diego Supercomputer Center at the
+#       University of California, San Diego and its contributors."
 #
 # 4. Except as permitted for the purposes of acknowledgment in paragraph 3,
 # neither the name or logo of this software nor the names of its
@@ -53,6 +53,7 @@
 # IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 # @Copyright@
+#
 
 REDHAT.ROOT = $(PWD)/../../
 RPM.EXTRAS=%define __os_install_post /usr/lib/rpm/brp-compress
