@@ -25,5 +25,5 @@ LAPACK_DIR     = $(SOURCE_PKG:%.$(SOURCE_SUFFIX)=%)
 TAR_BZ2_PKGS   = $(SOURCE_PKG)
 TGZ_PKGS       = $(LAPACK_PKG)
 
-RPM.EXTRAS     = AutoReq:No
+RPM.EXTRAS     = AutoReq:No\nAutoProv:No
 RPM.PREFIX     = $(PKGROOT)
