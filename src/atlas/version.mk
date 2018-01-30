@@ -5,7 +5,7 @@ COMPILERNAME := $(firstword $(subst /, ,$(ROLLCOMPILER)))
 
 NAME           = sdsc-atlas_$(COMPILERNAME)
 VERSION        = 3.10.2
-RELEASE        = 3
+RELEASE        = 4
 PKGROOT        = /opt/atlas/$(COMPILERNAME)
 
 SRC_SUBDIR     = atlas
@@ -25,4 +25,5 @@ LAPACK_DIR     = $(SOURCE_PKG:%.$(SOURCE_SUFFIX)=%)
 TAR_BZ2_PKGS   = $(SOURCE_PKG)
 TGZ_PKGS       = $(LAPACK_PKG)
 
-RPM.EXTRAS     = AutoReq:No
+RPM.EXTRAS     = AutoReq:No\nAutoProv:No
+RPM.PREFIX     = $(PKGROOT)
