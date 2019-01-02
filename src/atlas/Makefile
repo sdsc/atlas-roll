@@ -118,7 +118,7 @@ build: $(SRC_DIRS)
 	  if test "$(COMPILERNAME)" = "pgi"; then \
 	    perl -pi -e 's/(FLINKER)/(FLINKER) -Mnomain/' bin/Makefile; \
 	  fi; \
-	  make -j 16 build \
+	  make build \
 	)
 	-for cpu in `grep '^ *processor' /proc/cpuinfo | sed 's/[^0-9]*//'`; do \
 	done
