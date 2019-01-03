@@ -4,8 +4,8 @@ endif
 COMPILERNAME := $(firstword $(subst /, ,$(ROLLCOMPILER)))
 
 NAME           = sdsc-atlas_$(COMPILERNAME)
-VERSION        = 3.10.2
-RELEASE        = 4
+VERSION        = 3.10.3
+RELEASE        = 0
 PKGROOT        = /opt/atlas/$(COMPILERNAME)
 
 SRC_SUBDIR     = atlas
