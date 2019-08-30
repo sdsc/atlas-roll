@@ -105,12 +105,10 @@ LICENSE: $(SRC_DIRS)
 
 build: $(SRC_DIRS)
 	mkdir $(SOURCE_DIR)/build
-	-for cpu in `grep '^ *processor' /proc/cpuinfo | sed 's/[^0-9]*//'`; do \
-          cpupower  frequency-set -g performance; \
-	done
+	cpupower  frequency-set -g performance
 	( \
 	  $(MODULE_LOAD_CC); \
-          if [[ $(ROLLOPTS) ==  *"nothrottletest"* ]]; then \
+          if [[ "$(ROLLOPTS)" ==  *"nothrottletest"* ]]; then \
 	       patch ATLAS/CONFIG/src/config.c patch-files/config.c.patch; \
           fi; \
 	  cd $(SOURCE_DIR)/build; \
@@ -120,8 +118,6 @@ build: $(SRC_DIRS)
 	  fi; \
 	  make build \
 	)
-	-for cpu in `grep '^ *processor' /proc/cpuinfo | sed 's/[^0-9]*//'`; do \
-	done
 
 install::
 	mkdir -p -m 755 $(ROOT)/$(PKGROOT)
